@@ -1,38 +1,47 @@
-# Build environment in which to build the Camlistore Android app.
-#
-# This extends the Dockerfile from https://index.docker.io/u/wasabeef/android/
+# Build environment for building the WTF App for UDOO NEO
 
-FROM wasabeef/android
+# Adapted from https://github.com/appunite/docker/tree/master/android-java7-r22
+FROM ubuntu:14.04
 MAINTAINER gmacario <gmacario@gmail.com>
 
-# Found these from: android list sdk -u -e
-RUN android list sdk -u -e | grep build-tools- | perl -npe 's/.+"(.+)"/$1/' > /tmp/build-tools-version
-RUN perl -e 'die "No Android build tools version found." unless -s "/tmp/build-tools-version"'
-RUN echo y | android update sdk -u -t $(cat /tmp/build-tools-version)
-RUN echo y | android update sdk -u -t android-22
+# Install java7
+RUN apt-get install -y software-properties-common && add-apt-repository -y ppa:webupd8team/java && apt-get update
+RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+RUN apt-get install -y oracle-java7-installer
 
-# Don't need mercurial yet, since we're just using the archive URL to fetch Go.
-# But it's possible we may want to switch to using hg, in which case:
-# RUN yum -y install mercurial
+# Install Deps
+RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y --force-yes expect git wget libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 python curl
 
-# # Update the GOVERS to depend on a new version of Go.
-# #
-# # The 073fc578434b version is Go 1.3.1 (2014-02-21),
-# # to satisfy the dependency for Go 1.3 in the Docker build of
-# # camput.
-# ENV GOVERS 073fc578434b
+# Install Android SDK
+RUN cd /opt && wget --output-document=android-sdk.tgz --quiet http://dl.google.com/android/android-sdk_r24.1.2-linux.tgz && tar xzf android-sdk.tgz && rm -f android-sdk.tgz && chown -R root.root android-sdk-linux
 
-# RUN cd /usr/local && curl -O http://go.googlecode.com/archive/$GOVERS.zip
-# RUN cd /usr/local && unzip -q $GOVERS.zip
-# RUN cd /usr/local && mv go-$GOVERS go
-# RUN chmod 0755 /usr/local/go/src/make.bash
-# RUN echo $GOVERS > /usr/local/go/VERSION
-# RUN GOROOT=/usr/local/go GOARCH=arm bash -c "cd /usr/local/go/src && ./make.bash"
+# Setup environment
+ENV ANDROID_HOME /opt/android-sdk-linux
+ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
+# Install sdk elements
+COPY tools /opt/tools
+ENV PATH ${PATH}:/opt/tools
+RUN ["/opt/tools/android-accept-licenses.sh", "android update sdk --all --no-ui --filter platform-tools,tools,build-tools-22.0.0,android-22,addon-google_apis_x86-google-22,extra-android-support,extra-android-m2repository,extra-google-m2repository,sys-img-armeabi-v7a-android-22"]
 
-ENV ANDROID_HOME /usr/local/android-sdk-linux
-ENV ANT_HOME /usr/local/apache-ant-1.9.2
-ENV PATH $PATH:$ANDROID_HOME/tools
-ENV PATH $PATH:$ANDROID_HOME/platform-tools
-ENV PATH $PATH:$ANT_HOME/bin
-ENV IN_DOCKER 1
+RUN which adb
+RUN which android
+
+# # Create emulator
+# RUN echo "no" | android create avd \
+#                 --force \
+#                 --device "Nexus 5" \
+#                 --name test \
+#                 --target android-22 \
+#                 --abi armeabi-v7a \
+#                 --skin WVGA800 \
+#                 --sdcard 512M
+
+# Cleaning
+RUN apt-get clean
+
+# GO to workspace
+RUN mkdir -p /opt/workspace
+WORKDIR /opt/workspace
+
+# EOF
