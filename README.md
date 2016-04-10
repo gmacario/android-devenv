@@ -5,7 +5,7 @@ Logged as ubuntu@aws-wtf
 
 ```
 $ cd && git clone https://github.com/gmacario/wtf-docs
-$ cd ~/wtf-docs && docker build -t gmacario/wtfapp-devenv wtfapp-devenv/
+$ cd ~/wtf-docs && docker build --no-cache -t gmacario/wtfapp-devenv wtfapp-devenv/
 ```
 
 ### Using the image as Developer environment for the UDOO NEO
