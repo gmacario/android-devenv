@@ -5,7 +5,8 @@ FROM ubuntu:14.04
 MAINTAINER gmacario <gmacario@gmail.com>
 
 # Install java7
-RUN apt-get install -y software-properties-common && \
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
     add-apt-repository -y ppa:webupd8team/java && \
     apt-get update
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | \
