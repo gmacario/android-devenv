@@ -4,20 +4,24 @@ Docker image suitable for Android application development.
 
 ### Building the Docker image
 
-Logged as ubuntu@host
+Logged as user@host
 
 ```
-$ cd && git clone https://github.com/gmacario/android-devenv
-$ cd ~/wtf-docs && docker build --no-cache -t gmacario/android-devenv .
+cd ${HOME}
+git clone https://github.com/gmacario/android-devenv
+cd android-devenv
+docker build --no-cache -t gmacario/android-devenv .
 ```
 
 ### Using the image as Developer environment for the UDOO NEO
 
-Logged as ubuntu@host
+Logged as user@host
 
 ```
-$ cd && git clone https://github.com/WillyShakes/UdooWtf
-$ cd ~/UdooWtf && docker run -ti -v $(pwd):/opt/workspace gmacario/android-devenv
+cd ${HOME}
+git clone https://github.com/WillyShakes/UdooWtf
+cd ~/UdooWtf
+docker run -ti -v $(pwd):/opt/workspace gmacario/android-devenv
 ```
 
 Logged as root@container
