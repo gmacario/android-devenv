@@ -34,11 +34,13 @@ ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 # Install sdk elements
 COPY tools /opt/tools
 ENV PATH ${PATH}:/opt/tools
+
+# Comment for test only
+RUN which android
+
 RUN ["/opt/tools/android-accept-licenses.sh", "android update sdk --all --no-ui --filter platform-tools,tools,build-tools-23,android-22,android-23,addon-google_apis_x86-google-23,extra-android-support,extra-android-m2repository,extra-google-m2repository,sys-img-armeabi-v7a-android-23"]
 
 RUN which adb
-# Comment for test only
-# RUN which android
 
 # # Create emulator
 # RUN echo "no" | android create avd \
