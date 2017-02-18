@@ -22,6 +22,9 @@ ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 # Debug
 RUN which android
 
+# Prevent error "Failed to rename directory ..." when running "android update sdk"
+RUN mkdir -p /opt/android-sdk-linux/temp
+
 RUN /opt/tools/android-accept-licenses.sh \ 
     "/opt/android-sdk-linux/tools/android update sdk --all --no-ui --filter platform-tools,tools"
 
