@@ -42,14 +42,15 @@ RUN android-accept-licenses.sh \
 RUN which android
 RUN which adb
 
-# Create emulator
-RUN echo "no" | android create avd \
-                --force \
-                --device "UDOO Neo" \
-                --name my-udoo-neo \
-                --target android-23 \
-                --skin WVGA800 \
-                --sdcard 512M
+## Create emulator
+# RUN echo "no" | android create avd \
+#                --force \
+#                --device "UDOO Neo" \
+#                --name my-udoo-neo \
+#                --target android-23 \
+#                --abi armeabi-v7a \
+#                --skin WVGA800 \
+#                --sdcard 512M
 
 # Cleaning
 RUN apt-get clean
