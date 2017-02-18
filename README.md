@@ -21,13 +21,14 @@ Logged as user@host
 cd ${HOME}
 git clone https://github.com/WillyShakes/UdooWtf
 cd ~/UdooWtf
-docker run -ti -v $(pwd):/opt/workspace gmacario/android-devenv
+docker run -ti -v $PWD:/opt/workspace gmacario/android-devenv
 ```
 
 Logged as root@container
 
 ```
-# gradlew tasks
+chmod a+x gradlew
+./gradlew tasks
 ```
 
 etc.
