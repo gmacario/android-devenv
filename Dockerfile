@@ -17,7 +17,7 @@ ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
 # Debug
 RUN which android
-RUN android -h
+RUN android -h || true
 RUN android list sdk --extended
 RUN android list target
 RUN android list device
