@@ -20,7 +20,7 @@ RUN which android
 
 # UDOO Neo
 RUN android-accept-licenses.sh \
-        "android update sdk --all --no-ui --filter platform-tools,build-tools-23.0.2,android-23,sys-img-armeabi-v7a-android-23"
+        "android update sdk --all --no-ui --filter platform-tools,build-tools-23.0.2,android-23,extra,sys-img-armeabi-v7a-android-23"
 
 ## Most used SDKs
 # RUN /opt/tools/android-accept-licenses.sh \
