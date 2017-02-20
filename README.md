@@ -2,15 +2,10 @@
 
 Docker image suitable for Android application development.
 
-### Building the Docker image
-
-Logged as user@host
+The image can be [pulled from Docker Hub](https://hub.docker.com/r/gmacario/android-devenv/)
 
 ```
-cd ${HOME}
-git clone https://github.com/gmacario/android-devenv
-cd android-devenv
-docker build --no-cache -t gmacario/android-devenv .
+git pull gmacario/android-devenv
 ```
 
 ### Using the image as Developer environment for the UDOO NEO
@@ -32,5 +27,16 @@ chmod a+x gradlew
 ```
 
 etc.
+
+### Building the Docker image locally
+
+If you do not trust Docker Hub you may rebuild the image locally with the following command:
+
+```
+cd ${HOME}
+git clone https://github.com/gmacario/android-devenv
+cd android-devenv
+docker build --no-cache -t gmacario/android-devenv .
+```
 
 <!-- EOF -->
