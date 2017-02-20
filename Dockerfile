@@ -2,10 +2,6 @@
 
 FROM jacekmarchwicki/android:ubuntu-16-04-java7-8
 
-## Copy install tools
-# COPY tools /opt/tools
-# ENV PATH ${PATH}:/opt/tools
-
 # Install Android Command Line Tools
 # See https://developer.android.com/studio/index.html
 RUN mkdir -p /opt/android-sdk-linux && \
@@ -14,14 +10,6 @@ RUN mkdir -p /opt/android-sdk-linux && \
         https://dl.google.com/android/repository/tools_r25.2.5-linux.zip && \
     unzip -q tools_r25.2.5-linux.zip && \
     rm tools_r25.2.5-linux.zip
-
-# Install Android SDK (previous version) 
-# RUN cd /opt && \
-#    wget --output-document=android-sdk.tgz --quiet \
-#        http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
-#    tar xzf android-sdk.tgz && \
-#    rm -f android-sdk.tgz && \
-#    chown -R root.root android-sdk-linux
 
 # Setup environment
 ENV ANDROID_HOME /opt/android-sdk-linux
