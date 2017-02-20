@@ -17,10 +17,14 @@ ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
 # Debug
 RUN which android
+RUN android help
+RUN android list sdk --extended
+RUN android list target
+RUN android list device
 
 # UDOO Neo
 RUN android-accept-licenses.sh \
-        "android update sdk --all --no-ui --filter platform-tools,build-tools-23.0.2,android-23,extra,sys-img"
+        "android update sdk --all --no-ui --filter platform-tools,build-tools-23.0.2,android-23,extra"
 
 ## Most used SDKs
 # RUN /opt/tools/android-accept-licenses.sh \
