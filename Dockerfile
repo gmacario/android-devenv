@@ -47,6 +47,9 @@ RUN which adb
 # Cleaning
 RUN apt-get clean
 
+# Create user "jenkins"
+RUN id jenkins 2>/dev/null || useradd --uid 1000 --create-home jenkins
+
 # GO to workspace
 RUN mkdir -p /opt/workspace
 WORKDIR /opt/workspace
